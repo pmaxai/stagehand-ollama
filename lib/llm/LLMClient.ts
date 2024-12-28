@@ -8,6 +8,7 @@ import {
   AvailableModel,
   ClientOptions,
   ToolCall,
+  OllamaTransformedResponse,
 } from "../../types/model";
 
 export interface ChatMessage {
@@ -37,10 +38,11 @@ export const modelsWithVision: AvailableModel[] = [
   "claude-3-5-sonnet-20240620",
   "claude-3-5-sonnet-20241022",
   "gpt-4o-2024-08-06",
+  "gemma2:2b", // Add Ollama model name
 ];
 
 export const AnnotatedScreenshotText =
-  "This is a screenshot of the current page state with the elements annotated on it. Each element id is annotated with a number to the top left of it. Duplicate annotations at the same location are under each other vertically.";
+  "This is a screenshot of the current page state with the elements annotated on it. Each element id is annotated with a number to the top left of it. Duplicate annotations at the same location are un[...]
 
 export interface ChatCompletionOptions {
   messages: ChatMessage[];
@@ -62,10 +64,10 @@ export interface ChatCompletionOptions {
   requestId: string;
 }
 
-export type LLMResponse = AnthropicTransformedResponse | ChatCompletion;
+export type LLMResponse = AnthropicTransformedResponse | ChatCompletion | OllamaTransformedResponse; // Include OllamaTransformedResponse
 
 export abstract class LLMClient {
-  public type: "openai" | "anthropic";
+  public type: "openai" | "anthropic" | "ollama"; // Add ollama
   public modelName: AvailableModel;
   public hasVision: boolean;
   public clientOptions: ClientOptions;
